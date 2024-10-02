@@ -2,13 +2,10 @@
 
 import React, { PropsWithChildren } from "react";
 
-const Page = ({ children }: PropsWithChildren) => {
+const Page = () => {
     return (
         <div>
-            <div>
-                Dashboard
-                <div>{children}</div>
-            </div>
+            <div>Dashboard</div>
         </div>
     );
 };
