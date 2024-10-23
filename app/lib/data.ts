@@ -18,7 +18,6 @@ export async function fetchRevenue() {
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
-    console.log(data);
 
     // console.log('Data fetch completed after 3 seconds.');
 
@@ -54,8 +53,19 @@ export async function fetchCardData() {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
+
+    /* 
+      COUNT(*) 是查詢資料表中的所有行數，不論值是否為 Null 都會列入計算 
+    */
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
+    
+    /* 
+      (CASE WHEN status = 'paid' THEN amount ELSE 0 END) 
+      CASE WHEN 是條件判斷，如果 status 是 'paid'，則回傳 amount，否則回傳 0
+      SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending" 
+      是將所有符合條件的 amount 加總
+    */
     const invoiceStatusPromise = sql`SELECT
          SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
