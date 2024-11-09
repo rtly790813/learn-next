@@ -10,6 +10,7 @@ export default async function Page() {
     const latestInvoices = await fetchLatestInvoices();
     const { numberOfInvoices, numberOfCustomers, totalPaidInvoices, totalPendingInvoices } =
         await fetchCardData();
+
     return (
         <main>
             <h1 className={` mb-4 text-xl md:text-2xl`}>Dashboard</h1>
