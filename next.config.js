@@ -14,6 +14,7 @@ const nextConfig = {
             },
         ],
     },
+    // Rewrite test
     async rewrites() {
         return [
             {
