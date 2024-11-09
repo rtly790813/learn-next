@@ -9,5 +9,5 @@ export const inter = Inter({
 export const roboto_mono = Noto_Sans_TC({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-roboto-mono',
+  variable: '--font-noto',
 })

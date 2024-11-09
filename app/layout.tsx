@@ -1,12 +1,14 @@
 /** @format */
 
-import Link from "next/link";
+// 載入全域 scss
+import "@/app/ui/global.scss";
 
-import "@/app/ui/global.css";
+//
 import { inter } from "@/app/ui/fonts";
 import styles from "@/app/ui/home.module.css";
+// import Link from "next/link";
 
-import AcmeLogo from "./ui/acme-logo";
+// import AcmeLogo from "./ui/acme-logo";
 import NavLinks from "./ui/dashboard/nav-links";
 
 /*

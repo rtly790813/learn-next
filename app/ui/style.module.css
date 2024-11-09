@@ -1,0 +1,17 @@
+/** @format */
+/*
+    特性：
+    使用傳統的 CSS 語法編寫樣式，然後通過模組化的方式將它們應用到 React 等元件中。每個 .module.css 文件內的類名會被自動轉換為唯一名稱，避免全域命名衝突。
+    缺點：
+    但如果不進行優化，隨著應用規模增大，未使用的 CSS 會累積，影響性能。
+
+    
+    https://jason-memo.dev/posts/why-I-still-prefer-css-module-to-tailwind/
+*/
+.shape {
+    height: 0;
+    width: 0;
+    border-bottom: 30px solid black;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
