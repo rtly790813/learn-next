@@ -16,12 +16,12 @@ const LiffComponent = () => {
                 }
             })
             .then(() => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                    return;
-                }
-
+                // if (!liff.isLoggedIn()) {
+                //     liff.login();
+                //     return;
+                // }
                 const savedQueryString = sessionStorage.getItem("queryString");
+                console.log(savedQueryString);
                 if (savedQueryString) {
                     window.history.replaceState(
                         null,
@@ -31,6 +31,7 @@ const LiffComponent = () => {
                     sessionStorage.removeItem("queryString"); // 清理儲存
                 }
             })
+            .then(() => console.log("Done"))
             .catch((err) => {
                 console.error("LIFF 初始化失敗:", err);
             });
@@ -50,7 +51,7 @@ const LiffComponent = () => {
     return (
         <div>
             LIFF 已載入
-            <a onClick={handleClick}>分享</a>
+            <button onClick={handleClick}>分享</button>
         </div>
     );
 };
