@@ -9,7 +9,7 @@ const LiffComponent = () => {
     const [isLoggin, setIsLoggin] = useState(false);
     useEffect(() => {
         // 初始化 LIFF
-        liff.init({ liffId: "2004572750-pLKB2nPg" })
+        liff.init({ liffId: "2004572750-pLKB2nPg", withLoginOnExternalBrowser: true })
             .then(() => {
                 console.log(window.location.href);
             })
