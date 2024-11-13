@@ -10,25 +10,11 @@ const LiffComponent = () => {
         // 初始化 LIFF
         liff.init({ liffId: "2004572750-pLKB2nPg" })
             .then(() => {
-                const queryString = window.location.search;
-                if (queryString) {
-                    sessionStorage.setItem("queryString", queryString);
-                }
+                console.log(window.location.href);
             })
             .then(() => {
-                // if (!liff.isLoggedIn()) {
-                //     liff.login();
-                //     return;
-                // }
-                const savedQueryString = sessionStorage.getItem("queryString");
-                console.log(savedQueryString);
-                if (savedQueryString) {
-                    window.history.replaceState(
-                        null,
-                        "",
-                        window.location.pathname + savedQueryString
-                    );
-                    sessionStorage.removeItem("queryString"); // 清理儲存
+                if (!liff.isLoggedIn()) {
+                    liff.login({ redirectUri: window.location.href });
                 }
             })
             .then(() => console.log("Done"))
