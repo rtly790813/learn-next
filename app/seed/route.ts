@@ -1,8 +1,11 @@
+
+/** 這邊的 function 會將資料倒進資料庫 */
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 
 const client = await db.connect();
+
 
 async function seedUsers() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
