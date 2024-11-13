@@ -2,10 +2,11 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import liff from "@line/liff";
 
 const LiffComponent = () => {
+    const [isLoggin, setIsLoggin] = useState(false);
     useEffect(() => {
         // 初始化 LIFF
         liff.init({ liffId: "2004572750-pLKB2nPg" })
@@ -36,8 +37,8 @@ const LiffComponent = () => {
 
     return (
         <div>
-            LIFF 已載入
-            <button onClick={handleClick}>分享</button>
+            {isLoggin ? " LIFF 未登入" : "已登入"}
+            {isLoggin && <button onClick={handleClick}>分享</button>}
         </div>
     );
 };
