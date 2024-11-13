@@ -17,6 +17,9 @@ const LiffComponent = () => {
                 if (!liff.isLoggedIn()) {
                     liff.login({ redirectUri: window.location.href });
                 }
+                if (liff.isLoggedIn()) {
+                    setIsLoggin(true);
+                }
             })
             .then(() => console.log("Done"))
             .catch((err) => {
@@ -37,7 +40,7 @@ const LiffComponent = () => {
 
     return (
         <div>
-            {isLoggin ? " LIFF 未登入" : "已登入"}
+            {isLoggin ? "LIFF 已登入" : "未登入"}
             {isLoggin && <button onClick={handleClick}>分享</button>}
         </div>
     );
