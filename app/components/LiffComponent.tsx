@@ -10,16 +10,20 @@ const LiffComponent = () => {
     const [loginStr, setLoginStr] = useState("000");
 
     useEffect(() => {
+        const a = localStorage.getItem("queryString");
+        console.log("local", a);
+        if (!a) {
+            const queryString = window.location.search;
+            if (queryString) {
+                localStorage.setItem("queryString", queryString);
+            }
+        }
+
         // 初始化 LIFF
         liff.init({ liffId: "2004572750-pLKB2nPg", withLoginOnExternalBrowser: true })
             .then(() => {
                 if (!liff.isLoggedIn()) {
                     setLoginStr("unlogin");
-
-                    const queryString = window.location.search;
-                    if (queryString) {
-                        localStorage.setItem("queryString", queryString);
-                    }
                 }
                 if (liff.isLoggedIn()) {
                     console.log();
