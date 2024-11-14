@@ -23,6 +23,7 @@ const LiffComponent = () => {
         liff.init({ liffId: "2004572750-pLKB2nPg", withLoginOnExternalBrowser: true })
             .then(() => {
                 if (!liff.isLoggedIn()) {
+                    liff.login({ redirectUri: window.location.href });
                     setLoginStr("unlogin");
                 }
                 if (liff.isLoggedIn()) {
