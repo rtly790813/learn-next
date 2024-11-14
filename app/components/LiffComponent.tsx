@@ -22,7 +22,12 @@ const LiffComponent = () => {
                     }
                 }
                 if (liff.isLoggedIn()) {
-                    setLoginStr(`${localStorage.getItem("queryString")}`);
+                    console.log();
+                    setLoginStr(
+                        `querystring:${localStorage.getItem("queryString")}, state: ${
+                            liff.state
+                        }, referrer: ${liff.referrer}`
+                    );
                     setIsLoggin(true);
                 }
             })
