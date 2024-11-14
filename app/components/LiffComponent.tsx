@@ -24,9 +24,9 @@ const LiffComponent = () => {
                 if (liff.isLoggedIn()) {
                     console.log();
                     setLoginStr(
-                        `querystring:${localStorage.getItem("queryString")}, state: ${
-                            liff.state
-                        }, referrer: ${liff.referrer}`
+                        `querystring:${localStorage.getItem(
+                            "queryString"
+                        )},  referrer: ${JSON.stringify(liff)}`
                     );
                     setIsLoggin(true);
                 }
