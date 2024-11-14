@@ -8,6 +8,7 @@ import liff from "@line/liff";
 const LiffComponent = () => {
     const [isLoggin, setIsLoggin] = useState(false);
     const [loginStr, setLoginStr] = useState("000");
+
     useEffect(() => {
         // 初始化 LIFF
         liff.init({ liffId: "2004572750-pLKB2nPg", withLoginOnExternalBrowser: true })
@@ -16,8 +17,7 @@ const LiffComponent = () => {
             })
             .then(() => {
                 if (liff.isLoggedIn()) {
-                    setLoginStr("456");
-                    window.location.replace(location.href + `?token=${liff.getAccessToken()}`);
+                    setLoginStr(`${liff.getAccessToken()}`);
                     setIsLoggin(true);
                 }
             })
