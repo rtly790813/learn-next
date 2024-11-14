@@ -13,11 +13,16 @@ const LiffComponent = () => {
         // 初始化 LIFF
         liff.init({ liffId: "2004572750-pLKB2nPg", withLoginOnExternalBrowser: true })
             .then(() => {
-                console.log(window.location.href);
-            })
-            .then(() => {
+                if (!liff.isLoggedIn()) {
+                    setLoginStr("unlogin");
+
+                    const queryString = window.location.search;
+                    if (queryString) {
+                        localStorage.setItem("queryString", queryString);
+                    }
+                }
                 if (liff.isLoggedIn()) {
-                    setLoginStr(`${liff.getAccessToken()}`);
+                    setLoginStr(`${localStorage.getItem("queryString")}`);
                     setIsLoggin(true);
                 }
             })
