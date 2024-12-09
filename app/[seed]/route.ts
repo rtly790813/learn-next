@@ -3,6 +3,7 @@
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import { NextRequest } from 'next/server';
 
 const client = await db.connect();
 
@@ -104,7 +105,13 @@ async function seedRevenue() {
   return insertedRevenue;
 }
 
-export async function GET() {
+export async function GET(request: NextRequest, { params } :  {params:Promise<{ seed: string }>} ) {
+  const result  = await params
+  console.log(result.seed)
+  console.log(request.nextUrl.searchParams.get('token'))
+
+  request.cookies.set('test', 'hahah')
+
   return Response.json({
     message:
       'Uncomment this file and remove this line. You can delete this file when you are finished.',

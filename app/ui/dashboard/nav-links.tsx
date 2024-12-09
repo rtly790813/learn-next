@@ -9,6 +9,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import React from "react";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
@@ -56,16 +57,21 @@ const ForwardedMyButton = React.forwardRef(MyButton);
 export default function NavLinks() {
     // 使用 usePathname 來取得當前所在 path，但使用 usePathname 的元件必須是 client component，因此必須在元件程式中第一行加上 "use client" 來宣告這個元件事 client component
     const pathname = usePathname();
+    const { push } = useRouter();
+
+    const handleClick = () => {
+        // window.history.replaceState({ name: "yang" }, "", `/dashboard/customers`);
+        push("/dashboard/customers");
+    };
 
     return (
         <>
             {links.map((link) => {
                 const LinkIcon = link.icon;
                 return (
-                    <>
+                    <div key={link.name}>
                         {/* Default */}
-                        {/* <Link
-                            key={link.name}
+                        <Link
                             href={link.href}
                             className={clsx(
                                 "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
@@ -76,7 +82,7 @@ export default function NavLinks() {
                             scroll={true}>
                             <LinkIcon className="w-6" />
                             <p className="hidden md:block">{link.name}</p>
-                        </Link> */}
+                        </Link>
 
                         {/*   
                             Style component 必須加入 passHref & legacyBehavior 
@@ -97,17 +103,18 @@ export default function NavLinks() {
                         </Link> */}
 
                         {/* With function component */}
-                        <Link key={link.name} href={link.href} passHref legacyBehavior>
+                        {/* <Link href={link.href} passHref legacyBehavior>
                             <ForwardedMyButton
                                 onClick={() => {
                                     console.log("hello");
                                 }}>
                                 {link.name}
                             </ForwardedMyButton>
-                        </Link>
-                    </>
+                        </Link> */}
+                    </div>
                 );
             })}
+            <button onClick={() => handleClick()}>Custom with window pushState</button>
         </>
     );
 }

@@ -11,7 +11,6 @@ const LiffComponent = () => {
 
     useEffect(() => {
         const a = localStorage.getItem("queryString");
-        console.log("local", a);
         if (!a) {
             const queryString = window.location.search;
             if (queryString) {

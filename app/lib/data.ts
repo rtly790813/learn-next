@@ -15,7 +15,7 @@ export async function fetchRevenue() {
     // Don't do this in production :)
 
     // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
@@ -71,6 +71,7 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
 
+    /* 使用 promise.all 的方式，讓請求同時並發 */
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
@@ -131,6 +132,16 @@ export async function fetchFilteredInvoices(
 }
 
 export async function fetchInvoicesPages(query: string) {
+  /**
+   * FROM invoices JOIN customers 關聯兩個資料庫
+   * invoices.customer_id = customers.id 依據是 customer_id
+   * 
+   * ILIKE：是 PostgreSQL 關鍵字，用於模糊比對
+   * 表示依據使用者 query 的文字，來搜尋 customers 的 name / email 以及 invoices 的 amount dte status 欄位
+   * 進行模糊比對之後得到的結果
+   * 
+   * 在透過結果計算出總筆數
+   */
   try {
     const count = await sql`SELECT COUNT(*)
     FROM invoices
@@ -143,7 +154,8 @@ export async function fetchInvoicesPages(query: string) {
       invoices.status ILIKE ${`%${query}%`}
   `;
 
-    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+  // 總筆數 / 每頁顯示數量
+  const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
