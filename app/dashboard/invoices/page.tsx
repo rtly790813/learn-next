@@ -7,12 +7,15 @@ import { CreateInvoice } from "@/app/ui/invoices/buttons";
 import { inter } from "@/app/ui/fonts";
 import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
+// import { headers } from "next/headers";
 
 import { fetchInvoicesPages } from "@/app/lib/data";
+import Script from "next/script";
 
 export default async function Page(props: {
     searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
+    // const nonce = (await headers()).get("x-nonce") || "";
     const searchParams = await props.searchParams;
     const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
@@ -37,6 +40,9 @@ export default async function Page(props: {
             <div className="mt-5 flex w-full justify-center">
                 <Pagination totalPages={totalPages} />
             </div>
+            {/* <Script
+                src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+                nonce={nonce}></Script> */}
         </div>
     );
 }

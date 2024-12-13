@@ -2,14 +2,20 @@
 
 // 載入全域 scss
 import "@/app/ui/global.scss";
+// import { headers } from "next/headers";
 
 //
 import { inter } from "@/app/ui/fonts";
-import styles from "@/app/ui/home.module.css";
+// import styles from "@/app/ui/home.module.css";
 // import Link from "next/link";
 
 // import AcmeLogo from "./ui/acme-logo";
 import NavLinks from "./ui/dashboard/nav-links";
+import Script from "next/script";
+
+if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+    require("../mocks");
+}
 
 /*
     Next 中有一些預設的元件類型，其中一個就是 Layout
@@ -22,9 +28,18 @@ import NavLinks from "./ui/dashboard/nav-links";
         - 整個專案中一定會有一個 Root layout，主要放置 html & body tag
         - 與 Root Layout `相同層級` page.tsx 網址就會是 http://localhost:3000/
  */
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+    // const nonce = (await headers()).get("x-nonce") || "";
+    // console.log(nonce);
+
     return (
         <html lang="en">
+            {/* <head>
+                <Script
+                    src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+                    // nonce="nonce"
+                />
+            </head> */}
             <body className={`${inter.className} antialiased`}>
                 <main>{children}</main>
             </body>
