@@ -181,6 +181,8 @@ export async function fetchInvoiceById(id: string) {
       amount: invoice.amount / 100,
     }));
 
+    // 確認特定 id 是否真的有資料
+    console.log('fetchInvoiceById',invoice)
     return invoice[0];
   } catch (error) {
     console.error('Database Error:', error);
