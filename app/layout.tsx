@@ -12,6 +12,7 @@ import { inter } from "@/app/ui/fonts";
 // import AcmeLogo from "./ui/acme-logo";
 import NavLinks from "./ui/dashboard/nav-links";
 import Script from "next/script";
+import { error } from "console";
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
     require("../mocks");
@@ -31,7 +32,7 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     // const nonce = (await headers()).get("x-nonce") || "";
     // console.log(nonce);
-
+    // throw new Error("layout error ");
     return (
         <html lang="en">
             {/* <head>

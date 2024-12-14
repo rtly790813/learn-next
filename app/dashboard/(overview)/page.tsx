@@ -21,6 +21,7 @@ export default async function Page() {
     // const latestInvoices = await fetchLatestInvoices();
     // const { numberOfInvoices, numberOfCustomers, totalPaidInvoices, totalPendingInvoices } =
     //     await fetchCardData();
+    // throw new Error("123");
 
     return (
         <main>

@@ -23,6 +23,7 @@ const FormSchema = z.object({
 /** Create */
 const CreateInvoice = FormSchema.omit({ id: true, date: true });  // omit 可以忽略某些值不被驗證
 export async function createInvoice(formData: FormData) {
+    // parse() 當驗證出錯時會直接 throw error，因此頁面中如果沒有寫 error.tsx 或是 Error Boundary 的話，就會直接讓應用程式毀滅
     const { customerId, amount, status } = CreateInvoice.parse({
       customerId: formData.get('customerId'),
       amount: formData.get('amount'),
@@ -35,13 +36,23 @@ export async function createInvoice(formData: FormData) {
     const amountInCents = amount * 100;
     const date = new Date().toISOString().split('T')[0];
  
-    await sql`
-        INSERT INTO invoices (customer_id, amount, status, date)
-        VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-    `;
+    // 使用 try catch 來捕捉 SQL 失敗的 Error，並 return 相對應的訊息
+    try {
+      await sql`
+          INSERT INTO invoices (customer_id, amount, status, date)
+          VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+      `;
 
-    // revalidatePath('/dashboard/invoices');
-    redirect('/dashboard/invoices');
+      // 
+      revalidatePath('/dashboard/invoices');
+      redirect('/dashboard/invoices');
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Invoice"
+      }
+    }
+
+
   }
 
 // 測試寫 validate with useFormState
@@ -82,19 +93,32 @@ export async function updateInvoice(id: string, formData: FormData) {
 
     const amountInCents = amount * 100;
 
-    await sql`
+    try {
+      await sql`
         UPDATE invoices
         SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
         WHERE id = ${id}
-    `;
+      `;
 
-    revalidatePath('/dashboard/invoices');
-    redirect('/dashboard/invoices');
+      revalidatePath('/dashboard/invoices');
+      redirect('/dashboard/invoices');
+    } catch( error) {
+      return {
+            message: "Database Error: Failed to Update Invoice"
+      }
+    }
+
 }
 
 /** Delete */
 export async function deleteInvoice(id: string) {
-    console.log('id', id)
+  // 測試 throw error 顯示的畫面
+  // throw new Error('Failed to Delete Invoice');
+  try {
     await sql`DELETE FROM invoices WHERE id = ${id}`;
     revalidatePath('/dashboard/invoices');
+    return { message: 'Deleted Invoice.' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Invoice.' };
+  }
 }

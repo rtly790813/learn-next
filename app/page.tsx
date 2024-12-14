@@ -12,6 +12,7 @@ const loaderImage = ({ src }: { src: string }) => {
 };
 // https://www.astralweb.com.tw/wp-content/uploads/2018/12/Cloudinary-Introduction-4-768x362.png
 export default function Page() {
+    // throw new Error("root page error");
     return (
         <>
             <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">

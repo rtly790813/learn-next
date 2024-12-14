@@ -14,6 +14,8 @@ const Layout = ({ children }: PropsWithChildren) => {
     //     console.log("layout value for of:", value);
     // }
 
+    // throw new Error("dashboard error 12s3");
+
     console.log("layout render");
 
     return (
