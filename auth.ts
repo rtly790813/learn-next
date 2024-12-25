@@ -21,7 +21,8 @@ async function getUser(email: string): Promise<User | undefined> {
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   // provider : next auth 中的 provider 可以放置不同的登入方式選項，例如 google, github, 雙重認證 ...etc
-  // Credentials : next auth 提供的 credntials 是允許使用自定義的認證方式，例如一般的帳號密碼登入，但官方建議可以使用安全性較高的 OAuth, Email magic links ...etc 其他登入方式 (為何建議的原因 https://authjs.dev/getting-started/authentication)
+  // Credentials : next auth 提供的 credntials 是允許使用自定義的認證方式，例如一般的帳號密碼登入 https://authjs.dev/getting-started/authentication/credentials
+  // 但官方建議可以使用安全性較高的 OAuth, Email magic links ...etc 其他登入方式 (為何建議的原因 https://authjs.dev/getting-started/authentication)
   providers: [Credentials({
     // 
     async authorize(credentials, request) {
