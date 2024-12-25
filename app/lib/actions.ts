@@ -1,4 +1,6 @@
 'use server'
+import { signIn } from '@/auth'; // NextAuth
+import { AuthError } from 'next-auth';
 
 // 在這個檔案中標記了 use server 表示這個 file 是 server action，接著就可以在 server 或 client component 中使用檔案中的 function
 
@@ -120,5 +122,27 @@ export async function deleteInvoice(id: string) {
     return { message: 'Deleted Invoice.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Invoice.' };
+  }
+}
+
+/** Login logic */
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    // 呼叫 auth.ts 建立的 signIn，並將 formData 做為參數
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      // https://authjs.dev/reference/core/errors#type-6
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
   }
 }
