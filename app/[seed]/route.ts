@@ -19,6 +19,8 @@ async function seedUsers() {
     );
   `;
 
+  // 使用 bcrypt 來將 password hash，才將使用者的密碼儲存到 DB 中，避免使用者資料真的不小心暴露了，也有多一層保障
+  // https://nextjs.org/learn/dashboard-app/adding-authentication#password-hashing
   const insertedUsers = await Promise.all(
     users.map(async (user) => {
       const hashedPassword = await bcrypt.hash(user.password, 10);
